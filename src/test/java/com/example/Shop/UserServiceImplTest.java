@@ -7,7 +7,7 @@ import com.example.Shop.entity.User;
 import com.example.Shop.exceptions.EmailAlreadyExistsException;
 import com.example.Shop.exceptions.ResourceNotFoundException;
 import com.example.Shop.repository.UserRepository;
-import com.example.Shop.service.UserService;
+import com.example.Shop.service.serviceimpl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,13 +24,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+public class UserServiceImplTest {
 
     @Mock
     private UserRepository repository;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     private User user;
     private UserRequestDTO request;
@@ -60,7 +60,7 @@ public class UserServiceTest {
         when(repository.save(any(User.class)))
                 .thenReturn(user);
 
-        UserResponseDTO response = userService.createUser(request);
+        UserResponseDTO response = userServiceImpl.createUser(request);
 
         assertEquals("marcel", response.name());
 
@@ -75,7 +75,7 @@ public class UserServiceTest {
 
         assertThrows(
                 EmailAlreadyExistsException.class,
-                () -> userService.createUser(request)
+                () -> userServiceImpl.createUser(request)
         );
 
         verify(repository, never()).save(any());
@@ -87,7 +87,7 @@ public class UserServiceTest {
         when(repository.findById(1L))
                 .thenReturn(Optional.of(user));
 
-        UserResponseDTO responseDTO = userService.getById(1L);
+        UserResponseDTO responseDTO = userServiceImpl.getById(1L);
 
         assertEquals("marcel", responseDTO.name());
         assertEquals("marcel@gmail.com", responseDTO.email());
@@ -101,7 +101,7 @@ public class UserServiceTest {
 
         assertThrows(
                 ResourceNotFoundException.class,
-                () -> userService.getById(2L)
+                () -> userServiceImpl.getById(2L)
         );
     }
 
@@ -111,7 +111,7 @@ public class UserServiceTest {
         when(repository.findAll())
                 .thenReturn(List.of(user));
 
-        List<UserResponseDTO> users = userService.getAll();
+        List<UserResponseDTO> users = userServiceImpl.getAll();
 
         assertEquals(1, users.size());
         assertEquals("marcel", users.getFirst().name());
@@ -132,7 +132,7 @@ public class UserServiceTest {
                 .thenReturn(user);
 
         UserResponseDTO responseDTO =
-                userService.update(1L, updateDTO);
+                userServiceImpl.update(1L, updateDTO);
 
         assertEquals("updated", responseDTO.name());
         assertEquals("updated@gmail.com", responseDTO.email());
@@ -148,7 +148,7 @@ public class UserServiceTest {
 
         doNothing().when(repository).delete(user);
 
-        userService.delete(1L);
+        userServiceImpl.delete(1L);
 
         verify(repository).delete(user);
     }

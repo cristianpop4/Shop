@@ -3,7 +3,7 @@ package com.example.Shop;
 import com.example.Shop.dto.ProductDTO;
 import com.example.Shop.entity.Product;
 import com.example.Shop.repository.ProductRepository;
-import com.example.Shop.service.ProductService;
+import com.example.Shop.service.serviceimpl.ProductServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ProductServiceTest {
+class ProductServiceImplTest {
 
     @Mock
     private ProductRepository repository;
 
     @InjectMocks
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
 
     private Product product;
     private ProductDTO dto;
@@ -55,7 +55,7 @@ class ProductServiceTest {
 
         when(repository.save(any(Product.class))).thenReturn(product);
 
-        ProductDTO saved = productService.save(dto);
+        ProductDTO saved = productServiceImpl.save(dto);
 
         assertNotNull(saved);
         assertEquals("Laptop", saved.name());
@@ -68,7 +68,7 @@ class ProductServiceTest {
 
         when(repository.findAll()).thenReturn(List.of(product));
 
-        List<ProductDTO> products = productService.findAll();
+        List<ProductDTO> products = productServiceImpl.findAll();
 
         assertEquals(1, products.size());
 
@@ -80,7 +80,7 @@ class ProductServiceTest {
 
         when(repository.findById(1L)).thenReturn(Optional.of(product));
 
-        ProductDTO found = productService.findById(1L);
+        ProductDTO found = productServiceImpl.findById(1L);
 
         assertEquals("Laptop", found.name());
 
@@ -93,7 +93,7 @@ class ProductServiceTest {
         when(repository.findById(2L)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class,
-                () -> productService.findById(2L));
+                () -> productServiceImpl.findById(2L));
     }
 
     @Test
@@ -101,7 +101,7 @@ class ProductServiceTest {
 
         doNothing().when(repository).deleteById(1L);
 
-        productService.deleteById(1L);
+        productServiceImpl.deleteById(1L);
 
         verify(repository).deleteById(1L);
     }
@@ -112,7 +112,7 @@ class ProductServiceTest {
         when(repository.findById(1L)).thenReturn(Optional.of(product));
         when(repository.save(product)).thenReturn(product);
 
-        ProductDTO updated = productService.update(1L, dto);
+        ProductDTO updated = productServiceImpl.update(1L, dto);
 
         assertEquals("Laptop", updated.name());
 
@@ -126,7 +126,7 @@ class ProductServiceTest {
                 .thenReturn(List.of(product));
 
         List<ProductDTO> result =
-                productService.findExpensiveProducts(4000.0);
+                productServiceImpl.findExpensiveProducts(4000.0);
 
         assertFalse(result.isEmpty());
 
@@ -140,7 +140,7 @@ class ProductServiceTest {
                 .thenReturn(List.of(product));
 
         List<ProductDTO> result =
-                productService.findLowStock(20);
+                productServiceImpl.findLowStock(20);
 
         assertEquals(1, result.size());
 
@@ -154,7 +154,7 @@ class ProductServiceTest {
                 .thenReturn(List.of(product));
 
         List<ProductDTO> result =
-                productService.searchByName("Lap");
+                productServiceImpl.searchByName("Lap");
 
         assertEquals("Laptop", result.get(0).name());
 

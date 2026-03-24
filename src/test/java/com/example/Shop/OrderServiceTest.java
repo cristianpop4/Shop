@@ -8,7 +8,7 @@ import com.example.Shop.entity.User;
 import com.example.Shop.repository.OrderRepository;
 import com.example.Shop.repository.ProductRepository;
 import com.example.Shop.repository.UserRepository;
-import com.example.Shop.service.OrderService;
+import com.example.Shop.service.serviceimpl.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -2,7 +2,7 @@ package com.example.Shop.controller;
 
 import com.example.Shop.dto.ReviewRequestDto;
 import com.example.Shop.dto.ReviewResposeDto;
-import com.example.Shop.service.ReviewService;
+import com.example.Shop.service.serviceimpl.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

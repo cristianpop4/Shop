@@ -1,4 +1,4 @@
-package com.example.Shop.service;
+package com.example.Shop.service.serviceimpl;
 
 import com.example.Shop.dto.OrderDTO;
 import com.example.Shop.dto.OrderRequestDTO;
