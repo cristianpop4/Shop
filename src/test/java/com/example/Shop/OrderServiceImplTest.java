@@ -8,7 +8,7 @@ import com.example.Shop.entity.User;
 import com.example.Shop.repository.OrderRepository;
 import com.example.Shop.repository.ProductRepository;
 import com.example.Shop.repository.UserRepository;
-import com.example.Shop.service.serviceimpl.OrderService;
+import com.example.Shop.service.serviceimpl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class OrderServiceTest {
+class OrderServiceImplTest {
 
     @Mock
     private OrderRepository orderRepository;
@@ -35,7 +35,7 @@ class OrderServiceTest {
     private ProductRepository productRepository;
 
     @InjectMocks
-    private OrderService orderService;
+    private OrderServiceImpl orderServiceImpl;
 
     @Test
     void shouldCreateOrderSuccessfully() {
@@ -65,7 +65,7 @@ class OrderServiceTest {
                     return order;
                 });
 
-        OrderDTO result = orderService.createOrder(request);
+        OrderDTO result = orderServiceImpl.createOrder(request);
 
         assertNotNull(result);
 
@@ -90,7 +90,7 @@ class OrderServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class,
-                () -> orderService.createOrder(request));
+                () -> orderServiceImpl.createOrder(request));
 
         verify(orderRepository, never()).save(any());
     }
@@ -114,7 +114,7 @@ class OrderServiceTest {
         when(orderRepository.findAll())
                 .thenReturn(List.of(order));
 
-        List<OrderDTO> result = orderService.getAllOrders();
+        List<OrderDTO> result = orderServiceImpl.getAllOrders();
 
         assertEquals(1, result.size());
 

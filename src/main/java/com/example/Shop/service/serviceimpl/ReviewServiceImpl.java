@@ -10,6 +10,7 @@ import com.example.Shop.repository.OrderRepository;
 import com.example.Shop.repository.ProductRepository;
 import com.example.Shop.repository.ReviewRepository;
 import com.example.Shop.repository.UserRepository;
+import com.example.Shop.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewServiceImpl implements ReviewService {
 
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
@@ -49,7 +50,6 @@ public class ReviewService {
         return toDto(reviewRepository.save(review));
     }
 
-
     public ReviewResposeDto getById(Long id) {
         return toDto(reviewRepository.findById(id).
                 orElseThrow(() -> new ResourceNotFoundException("Review not fount"))
@@ -68,18 +68,4 @@ public class ReviewService {
                 .orElseThrow(() -> new  ResourceNotFoundException("Review not fount"));
         reviewRepository.delete(review);
     }
-
-
-    private ReviewResposeDto toDto(Review review) {
-        return new ReviewResposeDto(
-                review.getId(),
-                review.getUser().getUsername(),
-                review.getProduct().getName(),
-                review.getRating(),
-                review.getComment(),
-                review.getCreatedDate()
-        );
-    }
-
-
 }

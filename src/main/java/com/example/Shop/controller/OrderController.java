@@ -2,7 +2,7 @@ package com.example.Shop.controller;
 
 import com.example.Shop.dto.OrderDTO;
 import com.example.Shop.dto.OrderRequestDTO;
-import com.example.Shop.service.serviceimpl.OrderService;
+import com.example.Shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -8,6 +8,7 @@ import com.example.Shop.entity.User;
 import com.example.Shop.repository.OrderRepository;
 import com.example.Shop.repository.ProductRepository;
 import com.example.Shop.repository.UserRepository;
+import com.example.Shop.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
