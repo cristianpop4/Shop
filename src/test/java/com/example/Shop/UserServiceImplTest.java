@@ -82,7 +82,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void getByid_ShouldReturnUser(){
+    void getById_ShouldReturnUser(){
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(user));
